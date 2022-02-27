@@ -1,0 +1,13 @@
+{
+  "name": "uci-quiz-app",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "npm run watch --prefix client",
+    "server": "npm run watch --prefix server",
+    "start": "npm run server & npm run client",
+    "build": "npm run build --prefix client && node ./server/server.js"
+  },
+  "repository": "git@github.com:dimolf345/uci-quiz-app.git",
+  "author": "dimolf345 <dimolfetta.ta@gmail.com>",
+  "license": "MIT"
+}
