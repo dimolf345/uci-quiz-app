@@ -8,23 +8,30 @@ import Avatar from "@mui/material/Avatar";
 import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import styles from "./TopNavbar.styles";
+
 const TopNavBar = () => {
+  const classes = styles();
   return (
     <React.Fragment>
-      <AppBar>
+      <AppBar position="static">
         <Container>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Box>
-          <Typography>Nave Martinengo - F596</Typography>
+          <Toolbar>
+            <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="dropdown-control"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
+            <Typography className={classes.heading} variant="h5" component="h2">
+              Nave Martinengo - F596
+            </Typography>
+          </Toolbar>
         </Container>
       </AppBar>
     </React.Fragment>
