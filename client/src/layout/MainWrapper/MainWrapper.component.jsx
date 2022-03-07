@@ -1,6 +1,8 @@
 import React from "react";
 import Toolbar from "@mui/material/Toolbar";
 
+import PropTypes from "prop-types";
+
 const MainWrapper = ({ children, addPadLeft, sidebarWidth }) => {
   const wrapperStyle = {
     display: "flex",
@@ -17,6 +19,11 @@ const MainWrapper = ({ children, addPadLeft, sidebarWidth }) => {
       <main style={mainStyles}>{children}</main>
     </div>
   );
+};
+
+MainWrapper.propTypes = {
+  addPadLeft: PropTypes.bool,
+  sidebarWidth: PropTypes.number,
 };
 
 export default MainWrapper;

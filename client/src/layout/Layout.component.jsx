@@ -16,14 +16,14 @@ const Layout = ({ children }) => {
       <CssBaseline />
       {/* Top Navbar */}
       <TopNavBar />
-      {/* Drawer hidden on mobile */}
+      {/* Sidebar Drawer hidden on mobile */}
       <Sidebar showSidebar={showSidebar} />
-      {/* Main component with children */}
+      {/* Main component with children. When Sidebar is displayed a padding left is added with {sidebarWidth} size*/}
       <MainWrapper sidebarWidth={sidebarWidth} addPadLeft={showSidebar}>
         {children}
       </MainWrapper>
-      {!showSidebar && <BottomNavigation />}
       {/* Bottom menu only on mobile */}
+      {!showSidebar && <BottomNavigation />}
     </>
   );
 };

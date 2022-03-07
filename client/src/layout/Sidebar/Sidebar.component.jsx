@@ -5,6 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import styles from "./Siderbar.styles";
 
@@ -59,6 +60,10 @@ const Sidebar = (props) => {
       </List>
     </Drawer>
   );
+};
+
+Sidebar.propTypes = {
+  showSidebar: PropTypes.bool,
 };
 
 export default Sidebar;
