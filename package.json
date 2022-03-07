@@ -4,7 +4,9 @@
   "scripts": {
     "client": "npm run watch --prefix client",
     "server": "npm run watch --prefix server",
+    "server:local": "npm run watch:local --prefix server",
     "start": "npm run server & npm run client",
+    "start:local": "npm run server:local & npm run client",
     "build": "npm run build --prefix client && node ./server/server.js"
   },
   "repository": "git@github.com:dimolf345/uci-quiz-app.git",
