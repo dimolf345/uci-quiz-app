@@ -6,14 +6,16 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const morgan = require("morgan");
 const cors = require("cors");
-const { StatusCodes } = require("http-status-codes");
 require("dotenv").config();
+
+//internal dependencies
+const userRouter = require("../routes/userRoutes");
 
 //app declaration
 const app = express();
 
 if (process.env.NODE_ENV === "development") {
-  app.use(morgan);
+  app.use(morgan("dev"));
 }
 
 app.use(helmet());
@@ -28,6 +30,9 @@ app.use(express.static(path.join(__dirname, "..", "client", "dist")));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
 });
+
+//Routes middlewares
+app.use("/api/v1/users", userRouter);
 
 //not found
 app.all("*", (req, res, next) => {
