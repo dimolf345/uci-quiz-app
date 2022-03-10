@@ -8,10 +8,12 @@ const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
+const { StatusCodes } = require("http-status-codes");
 
 //internal dependencies
 const authRouter = require("../components/auth/authRoutes");
 const userRouter = require("../components/user/userRouter");
+const errorHandler = require("../components/error/globalErrorHandler");
 
 //app declaration
 const app = express();
@@ -40,7 +42,12 @@ app.use("/api/v1/users", authRouter, userRouter);
 
 //not found
 app.all("*", (req, res, next) => {
-  res.redirect("/not-found");
+  res.status(StatusCodes.NOT_FOUND).json({
+    status: "not found",
+    url: req.originalUrl,
+  });
 });
+
+app.use(errorHandler);
 
 module.exports = app;
