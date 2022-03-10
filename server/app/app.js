@@ -7,9 +7,11 @@ const xss = require("xss-clean");
 const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
+const cookieParser = require("cookie-parser");
 
 //internal dependencies
-const userRouter = require("../routes/userRoutes");
+const authRouter = require("../components/auth/authRoutes");
+const userRouter = require("../components/user/userRouter");
 
 //app declaration
 const app = express();
@@ -24,6 +26,8 @@ app.use(mongoSanitize());
 app.use(xss());
 app.use(cors());
 
+app.use(cookieParser());
+
 //serving static files
 app.use(express.static(path.join(__dirname, "..", "client", "dist")));
 
@@ -32,7 +36,7 @@ app.get("/", (req, res) => {
 });
 
 //Routes middlewares
-app.use("/api/v1/users", userRouter);
+app.use("/api/v1/users", authRouter, userRouter);
 
 //not found
 app.all("*", (req, res, next) => {

@@ -1,6 +1,5 @@
-// const mongoose = require("mongoose");
 const { StatusCodes } = require("http-status-codes");
-const User = require("../models/userModel");
+const User = require("./userModel");
 
 exports.createUser = async (req, res, next) => {
   try {

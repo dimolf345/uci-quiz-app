@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
   },
   last_access: {
     type: Date,
-    default: Date.now(),
+    default: Date().toLocaleString(),
   },
   role: {
     type: String,
@@ -74,7 +74,7 @@ userSchema.virtual("passwordConfirm").set(function (passwordConfirm) {
 userSchema.methods = {
   //checkpwd: methods for comparing pwds
   checkPassword: async function (sentPassword) {
-    await bcrypt.compare(sentPassword, this.hashed_password);
+    return await bcrypt.compare(sentPassword, this.hashed_password);
   },
   //encrypt: method for storing the hashed_password
   encryptPassword: async function (password) {
