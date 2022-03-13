@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -6,18 +7,17 @@ const DB_URI =
     ? process.env.MONGO_LOCAL_URI
     : process.env.MONGO_CLOUD_URI;
 
-const connect = async (app, port) => {
+const connectDB = async () => {
+  console.log("Connecting to DB...");
   try {
-    mongoose.connect(DB_URI, { autoIndex: true });
-    mongoose.connection.on("connected", () => {
+    mongoose.connect(DB_URI, { autoIndex: true }, (err) => {
+      if (err) throw new Error(err.message);
       console.log("Connection successful to the DB");
     });
-    app.listen(port, () => {
-      console.info(`Server started on port ${port}`);
-    });
+    return true;
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = connect;
+module.exports = connectDB;

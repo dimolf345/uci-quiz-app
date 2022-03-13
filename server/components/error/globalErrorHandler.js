@@ -39,6 +39,14 @@ const handleDuplicateFieldDB = (err) => {
   return new AppError(message, StatusCodes.BAD_REQUEST);
 };
 
+const handleValidationErrorDB = (err) => {
+  let message = "La validazione dei dati inseriti non è riuscita:\n- ";
+  let valErrors = Object.values(err.errors).map((field) => field.message);
+  valErrors = valErrors.join("\n- ");
+  message += valErrors;
+  return new AppError(message, StatusCodes.BAD_REQUEST);
+};
+
 const globalErrorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
   err.message = err.message || "error";
@@ -51,6 +59,8 @@ const globalErrorHandler = (err, req, res, next) => {
     //custom error handlers
     if (copyErr.name === "CastError") copyErr = handleCastErrorDB(copyErr);
     if (copyErr.code === 11000) copyErr = handleDuplicateFieldDB(copyErr);
+    if (copyErr.name === "ValidationError")
+      copyErr = handleValidationErrorDB(copyErr);
     sendErrorProd(copyErr, req, res);
   }
 };
