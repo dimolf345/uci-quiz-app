@@ -5,6 +5,11 @@ const authController = require("./authController");
 
 const router = express.Router();
 
-router.get("/signin", authController.signin);
+router.get(
+  "/signin",
+  authController.requireSignIn,
+  authController.restrictToAdmin,
+  authController.signin
+);
 
 module.exports = router;

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const app = require("./app/app");
 const connectDB = require("./db/connect");
 
