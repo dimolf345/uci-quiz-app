@@ -16,7 +16,7 @@
 
 - ## Installation
   1. Download the code or clone the project
-  2. run `npm install` in the root foolder from terminal
+  2. run `npm install` in the root folder from terminal
   3. `cd client && npm install` from terminal
   4. `cd server && npm install` from terminal
 
