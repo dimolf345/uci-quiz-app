@@ -1,15 +1,13 @@
 const { StatusCodes } = require("http-status-codes");
 const User = require("./userModel");
 
-exports.createUser = async (req, res, next) => {
-  try {
-    const newUser = await User.create(req.body);
-    if (newUser) {
-      res.status(StatusCodes.CREATED).json({
-        newUser,
-      });
-    }
-  } catch (error) {
-    console.log(error);
+const catchAsync = require("../error/catchAsync");
+
+exports.createUser = catchAsync(async (req, res, next) => {
+  const newUser = await User.create(req.body);
+  if (newUser) {
+    res.status(StatusCodes.CREATED).json({
+      newUser,
+    });
   }
-};
+});

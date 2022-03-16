@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Username è un campo obbligatorio"],
     trim: true,
     lowercase: true,
+    unique: true,
     minlength: [4, "Il campo username deve contenere almeno 4 caratteri"],
     maxlength: [20, "Il campo username non può contenere oltre 20 caratteri"],
     default: "Guest",
@@ -16,6 +17,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Il campo email è obbligatorio"],
     default: "guest@marina.difesa.it",
     trim: true,
+    unique: true,
   },
   ship: {
     type: String,
