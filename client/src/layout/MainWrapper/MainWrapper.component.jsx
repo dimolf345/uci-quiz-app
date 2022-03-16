@@ -7,7 +7,7 @@ const MainWrapper = ({ children, addPadLeft, sidebarWidth }) => {
   const wrapperStyle = {
     display: "flex",
     flexDirection: "column",
-    height: "calc(100vh - 56px)",
+    height: addPadLeft ? "100vh" : "calc(100vh - 56px)",
   };
   const mainStyles = {
     flexGrow: 1,

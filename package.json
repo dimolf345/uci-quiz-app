@@ -12,9 +12,6 @@
   "repository": "git@github.com:dimolf345/uci-quiz-app.git",
   "author": "dimolf345 <dimolfetta.ta@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "@mui/styles": "^5.4.4"
-  },
   "devDependencies": {
     "eslint": "^8.10.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -25,5 +22,9 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.3",
     "prettier": "^2.5.1"
+  },
+  "dependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "babel-eslint": "^10.1.0"
   }
 }

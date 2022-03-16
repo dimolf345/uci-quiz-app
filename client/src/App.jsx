@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import Layout from "./layout/Layout.component";
+import Home from "./pages/Home/Home.component";
 
 const theme = createTheme();
 
@@ -28,9 +29,9 @@ function App() {
       <Router>
         <Layout>
           <Routes>
-            <Route exact path="/" element={<Test />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="*" element={<Test2 />} />
+            <Route exact path='/' element={<Home />} />
+            <Route path='/auth' element={<Auth />} />
+            <Route path='*' element={<Test2 />} />
           </Routes>
         </Layout>
       </Router>
