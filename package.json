@@ -7,7 +7,8 @@
     "server:local": "npm run watch:local --prefix server",
     "start": "npm run server & npm run client",
     "start:local": "npm run server:local & npm run client",
-    "build": "npm run build --prefix client && node ./server/server.js"
+    "build": "npm run build --prefix client && node ./server/server.js",
+    "heroku-postbuild": "npm install && cd client && npm install && cd ../server && npm install && npm run build"
   },
   "repository": "git@github.com:dimolf345/uci-quiz-app.git",
   "author": "dimolf345 <dimolfetta.ta@gmail.com>",
@@ -26,5 +27,8 @@
   "dependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "babel-eslint": "^10.1.0"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }

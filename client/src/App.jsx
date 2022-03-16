@@ -3,25 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import Layout from "./layout/Layout.component";
-import Home from "./pages/Home/Home.component";
+import appRoutes from "./redux/routes/routes";
 
 const theme = createTheme();
-
-const Test = () => {
-  return <h1>Porco dio</h1>;
-};
-
-const Auth = () => {
-  return <h1>Porca Madonna</h1>;
-};
-
-const NotFound = () => {
-  return <h1>Not found</h1>;
-};
-
-const Test2 = () => {
-  return <h1>Stupidooooo</h1>;
-};
 
 function App() {
   return (
@@ -29,9 +13,10 @@ function App() {
       <Router>
         <Layout>
           <Routes>
-            <Route exact path='/' element={<Home />} />
-            <Route path='/auth' element={<Auth />} />
-            <Route path='*' element={<Test2 />} />
+            {appRoutes.map((route) => {
+              const { path, text, element, exact } = route;
+              return <Route path={path} exact={exact} element={element} />;
+            })}
           </Routes>
         </Layout>
       </Router>
