@@ -26,15 +26,16 @@ app.use(helmet());
 app.use(express.json());
 app.use(mongoSanitize());
 app.use(xss());
-app.use(cors());
+// app.use(cors());
 
 app.use(cookieParser());
 
+const CLIENT_URI = path.resolve(__dirname, "..", "..", "client");
 //serving static files
-app.use(express.static(path.join(__dirname, "..", "client", "dist")));
+app.use(express.static(path.join(CLIENT_URI, "dist")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
+  res.sendFile(path.resolve(CLIENT_URI, "dist", "index.html"));
 });
 
 //Routes middlewares
