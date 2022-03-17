@@ -1,1 +1,1 @@
-web: NPM_CONFIG_PRODUCTION=false npm run build
+web: PORT=$PORT npm run build
