@@ -3,6 +3,7 @@ const app = require("./app/app");
 const connectDB = require("./db/connect");
 require("dotenv").config();
 
+console.log("Port is", process.env.PORT);
 const PORT = process.env.PORT || 8000;
 
 //closes connection in case of unhandled rejection or uncaught exception
