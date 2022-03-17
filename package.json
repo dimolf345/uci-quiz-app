@@ -7,8 +7,7 @@
     "start:local": "npm run watch --prefix client & npm run watch:local --prefix server",
     "server": "npm start --prefix server",
     "prebuild": "npm run install-packages",
-    "build": "npm run build --prefix client && npm run server",
-    "heroku-postbuild": "npm run install-packages && npm run build --prefix client"
+    "build": "npm run build --prefix client && npm run server"
   },
   "repository": "git@github.com:dimolf345/uci-quiz-app.git",
   "author": "dimolf345 <dimolfetta.ta@gmail.com>",
