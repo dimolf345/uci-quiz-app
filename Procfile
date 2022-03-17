@@ -1,1 +1,1 @@
-web: npm run build
+web: NPM_CONFIG_PRODUCTION=false npm run build
