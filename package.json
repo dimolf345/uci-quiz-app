@@ -10,17 +10,7 @@
   "repository": "git@github.com:dimolf345/uci-quiz-app.git",
   "author": "dimolf345 <dimolfetta.ta@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "eslint": "^8.10.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.29.3",
-    "prettier": "^2.5.1",
-    "@babel/eslint-parser": "^7.17.0",
+  "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.2",
     "cookie-parser": "^1.4.6",
@@ -35,6 +25,18 @@
     "mongoose": "^6.2.3",
     "morgan": "^1.10.0",
     "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.3",
+    "prettier": "^2.5.1",
+    "@babel/eslint-parser": "^7.17.0"
   },
   "engines": {
     "node": "16.x"
