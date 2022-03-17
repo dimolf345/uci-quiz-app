@@ -4,7 +4,10 @@
   "scripts": {
     "client": "npm run dev --prefix client",
     "server": "cd server && nodemon server.js",
+    "server:local": "cd server && nodemon server.js --local",
     "start": "npm run client & npm run server",
+    "start:local": "npm run client & npm run server:local",
+    "build": "npm run build --prefix client && node ./server/server.js",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": "git@github.com:dimolf345/uci-quiz-app.git",
@@ -24,9 +27,11 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.2.3",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
     "eslint": "^8.10.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
@@ -35,8 +40,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.3",
-    "prettier": "^2.5.1",
-    "@babel/eslint-parser": "^7.17.0"
+    "prettier": "^2.5.1"
   },
   "engines": {
     "node": "16.x"
