@@ -2,10 +2,13 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+// const DB_URI =
+//   process.argv[2] === "--local"
+//     ? process.env.MONGO_LOCAL_URI
+//     : process.env.MONGO_CLOUD_URI;
+
 const DB_URI =
-  process.argv[2] === "--local"
-    ? process.env.MONGO_LOCAL_URI
-    : process.env.MONGO_CLOUD_URI;
+  "mongodb+srv://lucadimolfetta:Rusticone92@uci-quiz.4zf9n.mongodb.net/uci-quiz?retryWrites=true&w=majority";
 
 const connectDB = async () => {
   console.log("Connecting to DB...");
