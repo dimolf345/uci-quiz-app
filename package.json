@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "install-packages": "npm install --prefix client && npm install --prefix server",
-    "start": "npm run watch --prefix client && npm run watch --prefix server",
-    "start:local": "npm run watch --prefix client && npm run watch:local --prefix server",
+    "start": "npm run watch --prefix client & npm run watch --prefix server",
+    "start:local": "npm run watch --prefix client & npm run watch:local --prefix server",
     "server": "npm start --prefix server",
     "prebuild": "npm run install-packages",
     "build": "npm run build --prefix client && npm run server",
