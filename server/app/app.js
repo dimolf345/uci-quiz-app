@@ -30,7 +30,9 @@ app.use(cors());
 
 app.use(cookieParser());
 
-const CLIENT_URI = path.resolve(__dirname, "..", "..", "client");
+const CLIENT_URI = path.resolve(process.cwd(), "..", "client");
+console.log(path.join(CLIENT_URI, "dist"));
+
 //serving static files
 app.use(express.static(path.join(CLIENT_URI, "dist")));
 
