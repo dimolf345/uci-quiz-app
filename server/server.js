@@ -4,8 +4,6 @@ const connectDB = require("./db/connect");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8000;
-console.log(PORT);
-let server;
 
 //closes connection in case of unhandled rejection or uncaught exception
 const shutdownServer = (connection) => {
@@ -20,37 +18,26 @@ const shutdownServer = (connection) => {
 };
 
 //connects to DB and then waits for HTTP requests
-// async function startServer() {
-//   try {
-//     const DB = await connectDB();
-//     // if (DB === true) {
-//     //   server = app.listen(port, () => {
-//     //     console.log(`Server started on port ${port}`);
-//     //   });
-//     // }
-//   } catch (error) {
-//     console.log(error);
-//     shutdownServer(server);
-//   }
-//   return server;
-// }
+async function startServer(port) {
+  try {
+    await connectDB();
+    const server = app.listen(port, () => {
+      console.log(`Server started on port ${port}`);
+    });
+    return server;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-// process.on("unhandledRejection", (err) => {
-//   console.log(err.name, err.message);
-//   shutdownServer(server);
-// });
+const server = startServer(PORT);
 
-// process.on("uncaughtException", (err) => {
-//   console.log(err.name, err.message);
-//   shutdownServer(server);
-// });
+process.on("unhandledRejection", (err) => {
+  console.log(err.name, err.message);
+  shutdownServer(server);
+});
 
-// startServer();
-
-connectDB()
-  .then(
-    app.listen(PORT, () => {
-      console.log(`Server started on port ${PORT}`);
-    })
-  )
-  .catch((error) => console.log(error));
+process.on("uncaughtException", (err) => {
+  console.log(err.name, err.message);
+  shutdownServer(server);
+});

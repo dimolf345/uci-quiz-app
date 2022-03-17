@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "NODE_ENV=development nodemon server.js",
     "watch:local": "NODE_ENV=development nodemon server.js --local",
-    "build": "node server.js"
+    "start": "node server.js"
   },
   "repository": "https://github.com/dimolf345/uci-quiz-app",
   "author": "Luca Di Molfetta",
