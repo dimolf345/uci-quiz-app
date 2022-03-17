@@ -8,7 +8,7 @@
     "server": "npm start --prefix server",
     "prebuild": "npm run install-packages",
     "build": "npm run build --prefix client && npm run server",
-    "heroku-postbuild": "npm run install-packages"
+    "heroku-postbuild": "npm run install-packages && npm run build --prefix client"
   },
   "repository": "git@github.com:dimolf345/uci-quiz-app.git",
   "author": "dimolf345 <dimolfetta.ta@gmail.com>",
