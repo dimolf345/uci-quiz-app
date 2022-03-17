@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "client": "npm run dev --prefix client",
-    "server": "nodemon server.js",
+    "server": "cd server && nodemon server.js",
     "start": "npm run client & npm run server",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
