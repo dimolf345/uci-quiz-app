@@ -2,13 +2,10 @@
   "name": "uci-quiz-app",
   "version": "1.0.0",
   "scripts": {
-    "client": "npm run watch --prefix client",
-    "server": "npm run watch --prefix server",
-    "server:local": "npm run watch:local --prefix server",
-    "start": "npm run server & npm run client",
-    "start:local": "npm run server:local & npm run client",
-    "build": "npm run build --prefix client && npm run build --prefix server",
-    "heroku-postbuild": "npm install && cd client && npm install && cd ../server && npm install && npm run build"
+    "client": "npm run dev --prefix client",
+    "server": "nodemon server.js",
+    "start": "npm run client & npm run server",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": "git@github.com:dimolf345/uci-quiz-app.git",
   "author": "dimolf345 <dimolfetta.ta@gmail.com>",
@@ -22,13 +19,24 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.3",
-    "prettier": "^2.5.1"
-  },
-  "dependencies": {
+    "prettier": "^2.5.1",
     "@babel/eslint-parser": "^7.17.0",
-    "babel-eslint": "^10.1.0"
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-mongo-sanitize": "^2.2.0",
+    "helmet": "^5.0.2",
+    "http-status-codes": "^2.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.2.3",
+    "morgan": "^1.10.0",
+    "xss-clean": "^0.1.1"
   },
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   }
 }
