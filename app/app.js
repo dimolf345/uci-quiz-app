@@ -30,14 +30,13 @@ app.use(cors());
 
 app.use(cookieParser());
 
-const CLIENT_URI = path.resolve(process.cwd(), "..", "client");
-console.log(path.join(CLIENT_URI, "dist"));
+const CLIENT_URI = path.join(__dirname, "..", "client", "dist");
 
 //serving static files
-app.use(express.static(path.join(CLIENT_URI, "dist")));
+app.use(express.static(path.join(CLIENT_URI)));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(CLIENT_URI, "dist", "index.html"));
+  res.sendFile(path.join(CLIENT_URI, "index.html"));
 });
 
 //Routes middlewares
