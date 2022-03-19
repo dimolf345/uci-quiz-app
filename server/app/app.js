@@ -40,7 +40,8 @@ app.get("/", (req, res) => {
 });
 
 //Routes middlewares
-app.use("/api/v1/users", authRouter, userRouter);
+app.use("/api/v1/signin", authRouter);
+app.use("/api/v1/users", userRouter);
 
 //not found
 app.all("*", (req, res, next) => {

@@ -1,10 +1,11 @@
 const { StatusCodes } = require("http-status-codes");
 const AppError = require("./appError");
+require("dotenv").config();
 
 //in development mode we send all the information regarding the error in order to find the bug
 const sendErrorDev = (err, req, res) =>
   res.status(err.statusCode).json({
-    status: err.status,
+    status: err.statusCode,
     message: err.message,
     error: err,
     stack: err.stack,
@@ -48,6 +49,7 @@ const handleValidationErrorDB = (err) => {
 };
 
 const globalErrorHandler = (err, req, res, next) => {
+  console.log(err);
   err.statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
   err.message = err.message || "error";
   if (process.env.NODE_ENV === "development") {
@@ -63,6 +65,7 @@ const globalErrorHandler = (err, req, res, next) => {
       copyErr = handleValidationErrorDB(copyErr);
     sendErrorProd(copyErr, req, res);
   }
+  next();
 };
 
 module.exports = globalErrorHandler;

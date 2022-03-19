@@ -4,6 +4,11 @@ const connectDB = require("./db/connect");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8000;
+console.log(process.env.MONGO_CLOUD_URI);
+
+const DB_URI = process.argv.includes("--local")
+  ? process.env.MONGO_LOCAL_URI
+  : process.env.MONGO_CLOUD_URI;
 
 //closes connection in case of unhandled rejection or uncaught exception
 const shutdownServer = (connection) => {
@@ -20,7 +25,7 @@ const shutdownServer = (connection) => {
 //connects to DB and then waits for HTTP requests
 async function startServer(port) {
   try {
-    await connectDB();
+    await connectDB(DB_URI);
     const server = app.listen(port, () => {
       console.log(`Server started on port ${port}`);
     });
