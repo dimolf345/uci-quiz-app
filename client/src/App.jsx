@@ -15,7 +15,14 @@ function App() {
           <Routes>
             {appRoutes.map((route) => {
               const { path, element, exact } = route;
-              return <Route path={path} exact={exact} element={element} />;
+              return (
+                <Route
+                  key={route.name}
+                  path={path}
+                  exact={exact}
+                  element={element}
+                />
+              );
             })}
           </Routes>
         </Layout>

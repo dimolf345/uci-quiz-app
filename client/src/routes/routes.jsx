@@ -1,6 +1,6 @@
 import React from "react";
 import Home from "../pages/Home/Home.component";
-import SignUp from "../pages/SignUp/Signup.component";
+import SignUp from "../pages/SignUp/signup.component";
 
 function Login() {
   return <h1>Login Page</h1>;

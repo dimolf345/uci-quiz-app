@@ -4,7 +4,6 @@ const connectDB = require("./db/connect");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8000;
-console.log(process.env.MONGO_CLOUD_URI);
 
 const DB_URI = process.argv.includes("--local")
   ? process.env.MONGO_LOCAL_URI
