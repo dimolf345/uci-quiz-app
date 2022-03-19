@@ -7,7 +7,7 @@
     "server:local": "cd server && nodemon server.js --local",
     "start": "npm run client & npm run server",
     "start:local": "npm run client & npm run server:local",
-    "build": "npm run build --prefix client && node ./server/server.js",
+    "build": "npm run build --prefix client && cd server && NODE_ENV=production node server.js",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": "git@github.com:dimolf345/uci-quiz-app.git",

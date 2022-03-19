@@ -3,7 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 
 import PropTypes from "prop-types";
 
-const MainWrapper = ({ children, addPadLeft, sidebarWidth }) => {
+function MainWrapper({ children, addPadLeft, sidebarWidth }) {
   const wrapperStyle = {
     display: "flex",
     flexDirection: "column",
@@ -19,9 +19,16 @@ const MainWrapper = ({ children, addPadLeft, sidebarWidth }) => {
       <main style={mainStyles}>{children}</main>
     </div>
   );
+}
+
+MainWrapper.defaultProps = {
+  addPadLeft: false,
+  sidebarWidth: 200,
+  children: {},
 };
 
 MainWrapper.propTypes = {
+  children: PropTypes.element,
   addPadLeft: PropTypes.bool,
   sidebarWidth: PropTypes.number,
 };

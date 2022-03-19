@@ -1,48 +1,23 @@
 import React from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import styles from "./Siderbar.styles";
+import { selectRoutes } from "../../routes/routes";
 
-const menuItems = [
-  {
-    text: "I miei quiz",
-    path: "/my-quizzes",
-    icon: "",
-  },
-  {
-    text: "Nuovo quiz",
-    path: "/quiz",
-    icon: "",
-  },
-  {
-    text: "Il mio profilo",
-    path: "/profile",
-    icon: "",
-  },
-  {
-    text: "About",
-    path: "/about",
-    icon: "",
-  },
-  {
-    text: "Riporta un bug",
-    path: "/bugs",
-    icon: "",
-  },
-];
-
-const Sidebar = (props) => {
+function Sidebar({ showSidebar }) {
+  const menuItems = selectRoutes();
   const classes = styles();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <Drawer
-      sx={{ display: props.showSidebar ? "block" : "none" }}
+      sx={{ display: showSidebar ? "block" : "none" }}
       classes={{
         paper: classes.sidebar,
       }}
@@ -53,13 +28,22 @@ const Sidebar = (props) => {
       <Toolbar />
       <List>
         {menuItems.map((item) => (
-          <ListItem button key={item.text} onClick={() => navigate(item.path)}>
+          <ListItemButton
+            selected={location.pathname === item.path}
+            component="a"
+            key={item.name}
+            onClick={() => navigate(item.path)}
+          >
             <ListItemText primary={item.text} />
-          </ListItem>
+          </ListItemButton>
         ))}
       </List>
     </Drawer>
   );
+}
+
+Sidebar.defaultProps = {
+  showSidebar: false,
 };
 
 Sidebar.propTypes = {

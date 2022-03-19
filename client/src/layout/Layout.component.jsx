@@ -9,7 +9,7 @@ import BottomNavigation from "./BottomNavigation/BottomNavigation.component";
 
 import { sidebarWidth } from "./Sidebar/Siderbar.styles";
 
-const Layout = ({ children }) => {
+function Layout({ children }) {
   const showSidebar = useMediaQuery("(min-width:900px)");
   return (
     <>
@@ -26,6 +26,6 @@ const Layout = ({ children }) => {
       {!showSidebar && <BottomNavigation />}
     </>
   );
-};
+}
 
 export default Layout;
