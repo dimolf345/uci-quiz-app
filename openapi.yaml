@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: UCI Quiz App API
+  description: The RESTful API for the uci-quiz-app project
+  version: 1.0.0
+servers:
+  - url: https://uci-quiz-app.herokuapp.com/api/v1
+tags:
+  - name: "user"
+    description: "Everything related to users"
+  - name: "quiz"
+    description: "Everything related to quizzes"
+  - name: "question"
+    description: "Everything related to questions"
+paths:
+  /users:
+    post:
+      tags:
+      - "user"
+      summary: Create a new user
+      requestBody:
+        description: All user parameters needed to create a new account
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                passwordConfirm:
+                  type: string
+                ship:
+                  type: string
+                  enum: [bergamini, fasan, margottini, carabiniere, alpino, 
+                  rizzo, martinengo, marceglia]
+                role:
+                  type: string
+                  enum: [user,admin]
+      responses:
+        '201': 
+          description: Created
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success, fail, error]
+        
