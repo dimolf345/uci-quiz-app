@@ -36,7 +36,7 @@ const handleCastErrorDB = (err) => {
 
 const handleDuplicateFieldDB = (err) => {
   const field = Object.keys(err.keyValue);
-  const message = `Errore! Il campo ${field}, contenente il valore ${err.keyValue[field]}, dev'essere unico!`;
+  const message = `Errore! Il campo ${field}, contenente il valore ${err.keyValue[field]}, esiste già nel database e dev'essere unico!`;
   return new AppError(message, StatusCodes.BAD_REQUEST);
 };
 
@@ -49,22 +49,20 @@ const handleValidationErrorDB = (err) => {
 };
 
 const globalErrorHandler = (err, req, res, next) => {
-  console.log(err);
   err.statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
   err.message = err.message || "error";
   if (process.env.NODE_ENV === "development") {
-    sendErrorDev(err, req, res);
-  } else if (process.env.NODE_ENV === "production") {
-    //since we want to motify the err variable and it is NOT a good practice to modify directly
-    //incoming variables, we create a copy of the err object
-    let copyErr = { ...err };
-    //custom error handlers
-    if (copyErr.name === "CastError") copyErr = handleCastErrorDB(copyErr);
-    if (copyErr.code === 11000) copyErr = handleDuplicateFieldDB(copyErr);
-    if (copyErr.name === "ValidationError")
-      copyErr = handleValidationErrorDB(copyErr);
-    sendErrorProd(copyErr, req, res);
+    console.log(err);
   }
+  //since we want to motify the err variable and it is NOT a good practice to modify directly
+  //incoming variables, we create a copy of the err object
+  let copyErr = { ...err };
+  //custom error handlers
+  if (copyErr.name === "CastError") copyErr = handleCastErrorDB(copyErr);
+  if (copyErr.code === 11000) copyErr = handleDuplicateFieldDB(copyErr);
+  if (copyErr.name === "ValidationError")
+    copyErr = handleValidationErrorDB(copyErr);
+  sendErrorProd(copyErr, req, res);
   next();
 };
 

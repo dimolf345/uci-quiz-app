@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "client": "npm run dev --prefix client",
-    "server": "cd server && nodemon server.js",
-    "server:local": "cd server && nodemon server.js --local",
+    "server": "cd server && NODE_ENV=development nodemon server.js",
+    "server:local": "cd server && NODE_ENV=development nodemon server.js --local",
     "start": "npm run client & npm run server",
     "start:local": "npm run client & npm run server:local",
     "build": "npm run build --prefix client && cd server && NODE_ENV=production node server.js",

@@ -7,8 +7,8 @@ exports.createUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
   if (newUser) {
     res.status(StatusCodes.CREATED).json({
-      newUser,
+      status: "Successs",
+      message: `L'utente ${newUser.username} è stato creato con successo!`,
     });
   }
-  next();
 });
