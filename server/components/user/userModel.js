@@ -40,7 +40,8 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["user", "admin"],
-    required: [true, "Un utente dev'essere classificato come user o admin"],
+    default: "user",
+    // required: [true, "Un utente dev'essere classificato come user o admin"],
     select: false,
   },
   hashed_password: {
@@ -80,7 +81,7 @@ userSchema.methods = {
   },
   //encrypt: method for storing the hashed_password
   encryptPassword: async function (password) {
-    this.hashed_password = await bcrypt.hash(password, 12);
+    return await bcrypt.hash(password, 12);
   },
 };
 
@@ -98,7 +99,7 @@ userSchema.pre("validate", async function (next) {
   if (this.isNew && !this._password) {
     this.invalidate("password", "Il campo password è obbligatorio");
   }
-  await this.encryptPassword(this._password);
+  this.hashed_password = await bcrypt.hash(this.password, 12);
   next();
 });
 

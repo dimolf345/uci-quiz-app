@@ -6,7 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
 function CustomTextField(props) {
-  const { type, value, handleChange, fieldName } = props;
+  const { type, value, handleChange, fieldName, label, ...otherProps } = props;
   const [showPassword, setShowPassword] = React.useState(false);
   const passwordOptions = ["password", "text"];
   const capitalizeFirstLetter = (field) => {
@@ -25,8 +25,9 @@ function CustomTextField(props) {
         required
         variant="outlined"
         fullWidth
-        label={props.label ? props.label : name}
+        label={name || label}
         value={value}
+        {...otherProps}
       />
       {type === "password" && (
         <FormGroup>

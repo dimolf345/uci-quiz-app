@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const app = require("./app/app");
+const AppError = require("./components/error/appError");
 const connectDB = require("./db/connect");
 require("dotenv").config();
 
@@ -38,10 +39,10 @@ const server = startServer(PORT);
 
 process.on("unhandledRejection", (err) => {
   console.log(err.name, err.message);
-  shutdownServer(server);
+  shutdownServer(app);
 });
 
 process.on("uncaughtException", (err) => {
   console.log(err.name, err.message);
-  shutdownServer(server);
+  shutdownServer(app);
 });

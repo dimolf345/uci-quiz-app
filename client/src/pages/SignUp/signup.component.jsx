@@ -4,10 +4,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+import axios from "axios";
 
 import CustomTextField from "../../components/form/customTextField.component";
 
-const ships = [
+const SHIPS = [
   "bergamini",
   "fasan",
   "margottini",
@@ -25,16 +28,36 @@ function Signup() {
     password: "",
     passwordConfirm: "",
   });
-  const [ship, setShip] = React.useState(ships[6]);
+  const [ship, setShip] = React.useState(SHIPS[6]);
+  const url = `${process.env.BASE_URL}/api/v1/users`;
 
   const handleChange = (field) => (event) => {
     setFormField({ ...formFields, [field]: event.target.value });
   };
+
+  const handleSubmit = (e) => {
+    console.log(url);
+    e.preventDefault();
+    const requestBodyObj = { ...formFields, ship };
+    console.log(requestBodyObj);
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBodyObj),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
+  };
+
   return (
     // form wrapper
     <Container maxWidth="sm">
       {/* form */}
-      <Box sx={{ border: "2px solid red", padding: "2rem" }} component="form">
+      <form
+        style={{ border: "2px solid red", padding: "2rem" }}
+        onSubmit={handleSubmit}
+      >
         <Typography
           sx={{ mb: 2 }}
           fontWeight="bold"
@@ -50,6 +73,7 @@ function Signup() {
           fieldName="username"
           type="text"
           value={formFields.username}
+          helperText="Il campo username può contenere solo lettere minuscole e numeri, senza spazi"
         />
         {/* Email */}
         <CustomTextField
@@ -82,14 +106,16 @@ function Signup() {
           id="ship"
           fullWidth
         >
-          {ships.map((ship) => (
+          {SHIPS.map((ship) => (
             <MenuItem key={ship} value={ship}>
               {`Nave ${ship.toUpperCase()}`}
             </MenuItem>
           ))}
         </TextField>
-        <button type="submit">Submit</button>
-      </Box>
+        <Button variant="contained" endIcon={<SendIcon />} type="submit">
+          Registrati
+        </Button>
+      </form>
     </Container>
   );
 }
