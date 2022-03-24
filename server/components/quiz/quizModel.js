@@ -11,6 +11,7 @@ const quizSchema = new mongoose.Schema({
   },
   answers: {
     type: [Object],
+    default: [],
   },
   score: {
     type: Number,
