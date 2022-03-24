@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 const { StatusCodes } = require("http-status-codes");
 
 //internal dependencies
-const authRouter = require("../components/auth/authRoutes");
+const authRouter = require("../components/auth/authRouter");
 const userRouter = require("../components/user/userRouter");
 const errorHandler = require("../components/error/globalErrorHandler");
 
@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 });
 
 //Routes middlewares
-app.use("/api/v1/signin", authRouter);
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 
 //not found

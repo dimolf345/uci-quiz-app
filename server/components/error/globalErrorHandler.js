@@ -1,15 +1,7 @@
+/* eslint-disable no-console */
 const { StatusCodes } = require("http-status-codes");
 const AppError = require("./appError");
 require("dotenv").config();
-
-//in development mode we send all the information regarding the error in order to find the bug
-const sendErrorDev = (err, req, res) =>
-  res.status(err.statusCode).json({
-    status: err.statusCode,
-    message: err.message,
-    error: err,
-    stack: err.stack,
-  });
 
 const sendErrorProd = (err, req, res) => {
   //if err.isOperational, we have valid methods to handle the error, so we

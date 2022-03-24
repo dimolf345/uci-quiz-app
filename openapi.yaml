@@ -6,17 +6,20 @@ info:
 servers:
   - url: https://uci-quiz-app.herokuapp.com/api/v1
 tags:
-  - name: "user"
+  - name: "users"
     description: "Everything related to users"
-  - name: "quiz"
+  - name: "auth"
+    description: "Authentication routes"
+  - name: "quizzes"
     description: "Everything related to quizzes"
-  - name: "question"
+  - name: "questions"
     description: "Everything related to questions"
+
 paths:
   /users:
     post:
       tags:
-      - "user"
+      - "users"
       summary: Create a new user
       requestBody:
         description: All user parameters needed to create a new account
@@ -26,6 +29,9 @@ paths:
             schema:
               type: object
               properties:
+                name:
+                  type: string
+                  example: "Nome Cognome"
                 email:
                   type: string
                 password:
@@ -34,11 +40,16 @@ paths:
                   type: string
                 ship:
                   type: string
+                  # Martinengo is the default ship
                   enum: [bergamini, fasan, margottini, carabiniere, alpino, 
                   rizzo, martinengo, marceglia]
+                  example: "bergamini | fasan | margottini | carabiniere | alpino | 
+                  rizzo | martinengo | marceglia"
+                  default: "martinengo"
                 role:
                   type: string
                   enum: [user,admin]
+                  example: "user | admin"
       responses:
         '201': 
           description: Created
@@ -53,14 +64,205 @@ paths:
                   message:
                     type: string
         '400':
-          description: Bad request
+          description: Bad request. The cause of the error could be a ValidationError or DuplicateField error
           content:
               application/json:
                 schema:
                   type: object
-                  oneOf:
-                    - '#/components/responses/ValidationError'
+                  properties:
+                    status:
+                      type: string
+                      default: 'failed'
+                    message:
+                      description: Error message
+                      type: string
+  /auth/login:
+    post:
+      tags:
+      - "auth"
+      summary: User Login
+      requestBody:
+        description: Email address and password of the user
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: >
+            Successful auth. The server will send the token for auth both as a response and as a cookie set with key `jwt`.
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  user:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      role:
+                        type: string
+                        enum: ["user", "admin"]
+                  token:
+                    type: string
+        '401':
+          description: The authentication process failed because of invalid credentials
+  /quizzes:
+    post:
+      tags:
+      - "quizzes"
+      summary: Creates a new quiz. If userId is not provided via token or cookie, a default guest user will be selected
+      security: 
+        - BearerAuth: []
+        - CookieAuth: []
+      requestBody:
+        description: Requested number of questions and categories
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                questions:
+                  type: number
+                  format: integer
+                  minimum: 10
+                  maximum: 30
+                categories:
+                  type: array
+                  items:
+                    type: string
+                  example: ["segnali", "sap", "marinaresco"]
+      responses:
+        '201':
+          description: Quiz created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+  /questions:
+    post:
+      tags:
+      - "questions"
+      summary: Creates a new quiz question. The user should be logged as ADMIN to perform the operation
+      security:
+        - BearerAuth: []
+        - CookieAuth: []
+      responses:
+        '201':
+          description: Question created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: jwt
+  schemas:
+      User:
+        type: object
+        properties:
+          _id:
+            type: string
+            format: ObjectId
+            description: Object id assigned by MongoDB
+          name:
+            type: string
+          email:
+            type: string
+          last_access:
+            type: string
+            format: date-time
+          hashed_password:
+            type: string
+          ship:
+            type: string
+            enum: [bergamini, fasan, margottini, carabiniere, alpino, 
+                  rizzo, martinengo, marceglia]
+          role:
+            type: string
+            enum: [user, admin]
+      Quiz:
+        type: object
+        properties:
+          _id:
+            type: string
+            format: ObjectId
+            description: Object id assigned by MongoDB
+          creatorId:
+            type: string
+            format: ObjectId
+            description: The ObjectId of the user making the request
+          questions:
+            description: Array of Object Ids of the questions in the quiz. It will be populated on send
+            type: array
+            items:
+              type: string
+              format: ObjectId
+          answers:
+            description: Answers array will contain the objectId of the questions as a key and the answer string as a value
+            type: array
+            items:
+              type: object
+              properties:
+                questionId:
+                  type: string
+            example: 
+              "623ae6d3ffc486bee8a88b05" : The selected answer for that questionId
+          score:
+            type: number
+            format: float
+            minimum: 0.0
+            maximum: 1.0
+            default: 0.0
+          isSubmitted:
+            type: boolean
+            default: false
+          categories:
+            type: array
+            items:
+              type: string
+      Question:
+        type: object
+        properties:
+          _id:
+            type: string
+            format: ObjectId
+            description: Object id assigned by MongoDB
+          creatorId:
+            type: string
+            format: ObjectId
+            description: The ObjectId of the user making the request
+          title:
+            type: string
+            description: 'The question'
+          correctAnswer:
+            type: string
+          wrongAnswers:
+            type: array
+            minItems: 1
+            items:
+              type: string
+          category:
+            type: string
+            enum: [sap, segnali, marinaresco, locali]
+            example : "sap | segnali | marinaresco | locali"
   responses:
     ValidationError:
       description: One or more fields are invalidated by backend
@@ -71,7 +273,7 @@ components:
             properties:
               status:
                 type: string
-                default: 'failed'
+                default: 'fail'
               message:
                 type: string
                 default: 'La validazione dei dati inseriti non è riuscita'
@@ -90,3 +292,13 @@ components:
                 default: 'Invalid {path} : {value}'
     DuplicateField:
       description: Bad request. One or more properties in the request valid already exists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: 'fail'
+              message:
+                type: string

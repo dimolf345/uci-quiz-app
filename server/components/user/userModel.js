@@ -1,59 +1,57 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: [true, "Username è un campo obbligatorio"],
-    trim: true,
-    lowercase: true,
-    unique: true,
-    minlength: [4, "Il campo username deve contenere almeno 4 caratteri"],
-    maxlength: [20, "Il campo username non può contenere oltre 20 caratteri"],
-    default: "Guest",
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      minlength: [4, "Il campo nome deve contenere almeno 4 caratteri"],
+      maxlength: [20, "Il campo nome non può contenere oltre 30 caratteri"],
+      default: "Guest",
+    },
+    email: {
+      // TODO: insert validation email with endsWith(marina.difesa.it)
+      type: String,
+      required: [true, "Il campo email è obbligatorio"],
+      default: "guest@marina.difesa.it",
+      trim: true,
+      unique: true,
+    },
+    ship: {
+      type: String,
+      enum: [
+        "bergamini",
+        "fasan",
+        "margottini",
+        "carabiniere",
+        "alpino",
+        "rizzo",
+        "martinengo",
+        "marceglia",
+      ],
+      default: "martinengo",
+    },
+    last_access: {
+      type: Date,
+      default: Date().toLocaleString(),
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      required: [true, "Un utente dev'essere classificato come user o admin"],
+      select: false,
+    },
+    hashed_password: {
+      type: String,
+      required: [true, "hashed password is mandatory"],
+      select: false,
+    },
   },
-  email: {
-    type: String,
-    required: [true, "Il campo email è obbligatorio"],
-    default: "guest@marina.difesa.it",
-    trim: true,
-    unique: true,
-  },
-  ship: {
-    type: String,
-    enum: [
-      "bergamini",
-      "fasan",
-      "margottini",
-      "carabiniere",
-      "alpino",
-      "rizzo",
-      "martinengo",
-      "marceglia",
-    ],
-    default: "martinengo",
-  },
-  last_access: {
-    type: Date,
-    default: Date().toLocaleString(),
-  },
-  role: {
-    type: String,
-    enum: ["user", "admin"],
-    required: [true, "Un utente dev'essere classificato come user o admin"],
-    select: false,
-  },
-  hashed_password: {
-    type: String,
-    required: [true, "hashed password is mandatory"],
-    select: false,
-  },
-  active: {
-    type: Boolean,
-    default: true,
-    select: false,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 //hides the __v field when usermodel is sent as JSON
 userSchema.set("toJSON", { versionKey: false });

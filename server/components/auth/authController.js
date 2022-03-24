@@ -25,7 +25,7 @@ const sendTokenAndUser = (response, user, token) => {
     status: "success",
     token,
     user: {
-      username: user.username,
+      username: user.name,
       last_access: user.last_access,
       role: user.role,
     },
@@ -40,8 +40,7 @@ const findToken = (request) => {
     request.headers.authorization.startsWith("Bearer")
   ) {
     token = request.headers.authorization.split(" ")[1];
-  } else if (request.body.token) ({ token } = request.body);
-
+  }
   return token;
 };
 
@@ -50,10 +49,10 @@ const findToken = (request) => {
 //password sent, and then creates and sends the token as a cookie and
 //as a response
 exports.signin = catchAsync(async (req, res, next) => {
-  const { search, password } = req.body;
-  const user = await User.findOne({
-    $or: [{ username: search }, { email: search }],
-  }).select("+hashed_password +role");
+  const { email, password } = req.body;
+  const user = await User.findOne({ email: email }).select(
+    "+hashed_password +role"
+  );
   if (!user) {
     res.status(StatusCodes.NOT_FOUND).json({
       status: "fail",
@@ -70,7 +69,10 @@ exports.signin = catchAsync(async (req, res, next) => {
     setTokenCookie(res, token);
     sendTokenAndUser(res, user, token);
   } else {
-    const error = new AppError("Autenticazione non riuscita!", 403);
+    const error = new AppError(
+      "Autenticazione non riuscita!",
+      StatusCodes.UNAUTHORIZED
+    );
     next(error);
   }
 });
@@ -79,7 +81,10 @@ exports.requireSignIn = catchAsync(async (req, res, next) => {
   const token = findToken(req);
   if (!token) {
     return next(
-      new AppError("Autenticazione fallita, riprovare il login", 400)
+      new AppError(
+        "Autenticazione fallita, riprovare il login",
+        StatusCodes.UNAUTHORIZED
+      )
     );
   }
   const id = await jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
@@ -96,7 +101,8 @@ exports.restrictToAdmin = (req, res, next) => {
   if (role !== "admin") {
     return next(
       new AppError(
-        "E' necessario un account di tipo admin per poter eseguire l'operazione!"
+        "E' necessario un account di tipo admin per poter eseguire l'operazione!",
+        StatusCodes.FORBIDDEN
       )
     );
   }
