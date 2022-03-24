@@ -50,4 +50,43 @@ paths:
                   status:
                     type: string
                     enum: [success, fail, error]
-        
+                  message:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+              application/json:
+                schema:
+                  type: object
+                  oneOf:
+                    - '#/components/responses/ValidationError'
+components:
+  responses:
+    ValidationError:
+      description: One or more fields are invalidated by backend
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: 'failed'
+              message:
+                type: string
+                default: 'La validazione dei dati inseriti non è riuscita'
+    CastError:
+      description: MongoDB retrieval of data has failed due to wrong ObjectID
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: 'error'
+              message:
+                type: string
+                default: 'Invalid {path} : {value}'
+    DuplicateField:
+      description: Bad request. One or more properties in the request valid already exists
