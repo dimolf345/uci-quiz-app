@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const questionSchema = new mongoose.Schema(
   {
-    creator: {
+    creatorId: {
       type: mongoose.SchemaTypes.ObjectId,
       required: [true, "E' necessario assegnare un id utente alla domanda"],
     },
@@ -30,11 +30,13 @@ const questionSchema = new mongoose.Schema(
         true,
         "Una domanda deve appartenere necessariamente ad una categoria",
       ],
-      enum: ["sap", "locali", "marinaresco", "segnali"],
+      enum: ["sap", "locali", "marinaresco", "segnali", "generale"],
     },
   },
   { timestamps: true }
 );
+
+questionSchema.set("toJSON", { versionKey: false });
 
 const questionModel = mongoose.model("Question", questionSchema);
 

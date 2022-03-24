@@ -13,6 +13,7 @@ const { StatusCodes } = require("http-status-codes");
 //internal dependencies
 const authRouter = require("../components/auth/authRouter");
 const userRouter = require("../components/user/userRouter");
+const questionRouter = require("../components/question/questionRouter");
 const errorHandler = require("../components/error/globalErrorHandler");
 
 //app declaration
@@ -42,7 +43,7 @@ app.get("/", (req, res) => {
 //Routes middlewares
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
-
+app.use("/api/v1/questions", questionRouter);
 //not found
 app.all("*", (req, res, next) => {
   res.status(StatusCodes.NOT_FOUND).json({

@@ -149,7 +149,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Quiz'
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    default: 'success'
+                  quiz:
+                   type: object
+                   $ref: '#/components/schemas/Quiz'
   /questions:
     post:
       tags:
@@ -164,7 +171,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Question'
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  question:
+                    type: object
+                    $ref: '#/components/schemas/Question'
 components:
   securitySchemes:
     BearerAuth:
@@ -213,8 +226,8 @@ components:
             description: Array of Object Ids of the questions in the quiz. It will be populated on send
             type: array
             items:
-              type: string
-              format: ObjectId
+              type: object
+              $ref: '#/components/schemas/Question'
           answers:
             description: Answers array will contain the objectId of the questions as a key and the answer string as a value
             type: array
@@ -261,8 +274,8 @@ components:
               type: string
           category:
             type: string
-            enum: [sap, segnali, marinaresco, locali]
-            example : "sap | segnali | marinaresco | locali"
+            enum: [sap, segnali, marinaresco, locali, generale]
+            example : "sap | segnali | marinaresco | locali | generale"
   responses:
     ValidationError:
       description: One or more fields are invalidated by backend
