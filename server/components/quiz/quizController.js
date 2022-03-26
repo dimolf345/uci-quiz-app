@@ -27,6 +27,29 @@ exports.createQuiz = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updateQuiz = catchAsync(async (req, res, next) => {
+  const quizId = req.params;
+  const { answer, isSubmitted } = req.body;
+  const quiz = await Quiz.findById(quizId);
+  checkQuizExistAndCreator(quiz, res.locals.user, next);
+  if (isSubmitted === true) {
+    quiz.updateScore();
+    const updatedQuiz = quiz.save();
+    res.status(StatusCodes.OK).json({
+      status: "success",
+      updatedQuiz,
+    });
+  }
+  if (quiz.isSubmitted && answers) {
+    return next(
+      new AppError(
+        "Questo quiz è già stato chiuso! Resetta il quiz!",
+        StatusCodes.BAD_REQUEST
+      )
+    );
+  }
+});
+
 exports.getQuestionFromQuiz = catchAsync(async (req, res, next) => {
   const { quizId, questionNumber } = req.params;
   const { user } = res.locals;

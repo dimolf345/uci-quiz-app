@@ -36,7 +36,12 @@ const questionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-questionSchema.set("toJSON", { versionKey: false });
+// questionSchema.virtual("answers").get(function () {
+//   const answers = shuffle([...this.wrongAnswers, this.correctAnswer]);
+//   return answers;
+// });
+
+questionSchema.set("toJSON", { versionKey: false, virtuals: true });
 
 const questionModel = mongoose.model("Question", questionSchema);
 

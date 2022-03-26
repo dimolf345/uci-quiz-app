@@ -46,13 +46,14 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/questions", questionRouter);
 app.use("/api/v1/quizzes", quizRouter);
+
 //not found
-// app.all("*", (req, res, next) => {
-//   res.status(StatusCodes.NOT_FOUND).json({
-//     status: "not found",
-//     url: req.originalUrl,
-//   });
-// });
+app.all("*", (req, res, next) => {
+  res.status(StatusCodes.NOT_FOUND).json({
+    status: "not found",
+    url: req.originalUrl,
+  });
+});
 
 app.use(errorHandler);
 
