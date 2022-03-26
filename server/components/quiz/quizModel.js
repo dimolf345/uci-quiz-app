@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const Question = require("../question/questionModel");
+
 const quizSchema = new mongoose.Schema(
   {
     creatorId: {
@@ -15,7 +17,7 @@ const quizSchema = new mongoose.Schema(
       //TODO create a custom validator that ensures that the questions.length is between 10 and 30
     },
     answers: {
-      type: [Object],
+      type: Array,
       default: [],
     },
     score: {
@@ -36,6 +38,15 @@ const quizSchema = new mongoose.Schema(
 );
 
 quizSchema.set("toJSON", { versionKey: false });
+
+quizSchema.methods = {
+  updateScore: async function () {
+    this.isSubmitted = true;
+    this.score = 0.5;
+    await this.save();
+    return this.score;
+  },
+};
 
 const quizModel = mongoose.model("Quiz", quizSchema);
 

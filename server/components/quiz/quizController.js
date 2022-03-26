@@ -20,6 +20,7 @@ exports.createQuiz = catchAsync(async (req, res, next) => {
   const quiz = await Quiz.create({
     creatorId: userId,
     questions: selectedQuestions,
+    answers: new Array(selectedQuestions.length).fill(""),
   });
   res.status(StatusCodes.OK).json({
     status: "success",
@@ -27,31 +28,66 @@ exports.createQuiz = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateQuiz = catchAsync(async (req, res, next) => {
-  const quizId = req.params;
-  const { answer, isSubmitted } = req.body;
+exports.submitOrResetQuiz = catchAsync;
+
+exports.updateQuizAnswer = catchAsync(async (req, res, next) => {
+  const { quizId, questionNumber } = req.params;
+  const { answer } = req.body;
   const quiz = await Quiz.findById(quizId);
-  checkQuizExistAndCreator(quiz, res.locals.user, next);
-  if (isSubmitted === true) {
-    quiz.updateScore();
-    const updatedQuiz = quiz.save();
-    res.status(StatusCodes.OK).json({
-      status: "success",
-      updatedQuiz,
-    });
-  }
-  if (quiz.isSubmitted && answers) {
+  if (!quiz)
     return next(
       new AppError(
-        "Questo quiz è già stato chiuso! Resetta il quiz!",
+        `Il quiz con id ${quizId} non è presente nel DB`,
+        StatusCodes.NOT_FOUND
+      )
+    );
+  checkQuizExistAndCreator(quiz, res.locals.user, next);
+  checkQuestionNumber(quiz, questionNumber, next);
+  quiz.answers[questionNumber] = answer;
+  await quiz.save();
+  res.status(StatusCodes.OK).json({
+    status: "success",
+  });
+});
+
+exports.submitOrResetQuiz = catchAsync(async (req, res, next) => {
+  const { isSubmitted } = req.body;
+  const { quizId } = req.params;
+  const quiz = await Quiz.findById(quizId);
+  if (!quiz)
+    return next(
+      new AppError(
+        `Il quiz con id ${quizId} non è presente nel DB`,
+        StatusCodes.NOT_FOUND
+      )
+    );
+  if (isSubmitted === "true" && quiz.isSubmitted === true)
+    return next(
+      new AppError(
+        "Errore! Il quiz è stato già chiuso!",
         StatusCodes.BAD_REQUEST
       )
     );
+  if (!isSubmitted) {
+    quiz.answers = quiz.answers.fill("");
+    quiz.score = 0.0;
+    await quiz.save();
+    res.status(StatusCodes.OK).json({
+      status: "success",
+      quiz,
+    });
   }
+  const score = await quiz.updateScore();
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    score,
+  });
+  res.status(200);
 });
 
 exports.getQuestionFromQuiz = catchAsync(async (req, res, next) => {
-  const { quizId, questionNumber } = req.params;
+  const { quizId } = req.params;
+  const questionNumber = Number(req.params.questionNumber);
   const { user } = res.locals;
   const quiz = await Quiz.findById(quizId);
   checkQuizExistAndCreator(quiz, user, next);
@@ -68,5 +104,8 @@ exports.getQuestionFromQuiz = catchAsync(async (req, res, next) => {
   res.status(StatusCodes.OK).json({
     status: "success",
     question,
+    answer: quiz.answers[questionNumber],
   });
 });
+
+exports.getQuizStatus = catchAsync(async (req, res, next) => {});

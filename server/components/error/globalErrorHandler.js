@@ -9,7 +9,7 @@ const sendErrorProd = (err, req, res) => {
   if (err.isOperational) {
     return res.status(err.statusCode).json({
       status: err.status,
-      message: err.message,
+      message: err,
     });
   }
   //otherwise it's a non expected error, so we give only generic information

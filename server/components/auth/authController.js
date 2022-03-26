@@ -42,7 +42,7 @@ exports.signin = catchAsync(async (req, res, next) => {
 
 exports.requireSignIn = catchAsync(async (req, res, next) => {
   //skips require sign in case allowAsGuest middleware has been called
-  if (res.locals.user) next();
+  if (res.locals.user) return next();
   const token = findToken(req);
   if (!token) {
     return next(
