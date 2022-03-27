@@ -43,7 +43,7 @@ exports.signin = catchAsync(async (req, res, next) => {
 exports.requireSignIn = catchAsync(async (req, res, next) => {
   //skips require sign in case allowAsGuest middleware has been called
   if (res.locals.user) return next();
-  const token = findToken(req);
+  const token = res.locals.token ? res.locals.token : findToken(req);
   if (!token) {
     return next(
       new AppError(
@@ -75,6 +75,11 @@ exports.restrictToAdmin = (req, res, next) => {
 };
 
 exports.allowAsGuest = catchAsync(async (req, res, next) => {
+  const token = findToken(req);
+  if (token) {
+    res.locals.token = token;
+    return next();
+  }
   const guestUser = await User.findOne({
     email: "guest@marina.difesa.it",
   }).select("+role");

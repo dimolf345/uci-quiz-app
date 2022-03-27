@@ -5,14 +5,22 @@ const {
   getQuestionFromQuiz,
   updateQuizAnswer,
   submitOrResetQuiz,
+  getQuizStatus,
+  getAllQuizzes,
 } = require("./quizController");
 const { requireSignIn, allowAsGuest } = require("../auth/authController");
 
 const router = express.Router();
 
-router.route("/").post(allowAsGuest, requireSignIn, createQuiz);
+router
+  .route("/")
+  .get(requireSignIn, getAllQuizzes)
+  .post(allowAsGuest, requireSignIn, createQuiz);
 
-router.route("/:quizId").patch(allowAsGuest, requireSignIn, submitOrResetQuiz);
+router
+  .route("/:quizId")
+  .get(allowAsGuest, requireSignIn, getQuizStatus)
+  .patch(allowAsGuest, requireSignIn, submitOrResetQuiz);
 
 router
   .route("/:quizId/:questionNumber")

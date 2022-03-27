@@ -28,8 +28,6 @@ exports.createQuiz = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.submitOrResetQuiz = catchAsync;
-
 exports.updateQuizAnswer = catchAsync(async (req, res, next) => {
   const { quizId, questionNumber } = req.params;
   const { answer } = req.body;
@@ -69,10 +67,8 @@ exports.submitOrResetQuiz = catchAsync(async (req, res, next) => {
       )
     );
   if (!isSubmitted) {
-    quiz.answers = quiz.answers.fill("");
-    quiz.score = 0.0;
-    await quiz.save();
-    res.status(StatusCodes.OK).json({
+    await quiz.resetQuiz();
+    return res.status(StatusCodes.OK).json({
       status: "success",
       quiz,
     });
@@ -82,7 +78,6 @@ exports.submitOrResetQuiz = catchAsync(async (req, res, next) => {
     status: "success",
     score,
   });
-  res.status(200);
 });
 
 exports.getQuestionFromQuiz = catchAsync(async (req, res, next) => {
@@ -90,6 +85,13 @@ exports.getQuestionFromQuiz = catchAsync(async (req, res, next) => {
   const questionNumber = Number(req.params.questionNumber);
   const { user } = res.locals;
   const quiz = await Quiz.findById(quizId);
+  if (!quiz)
+    return next(
+      new AppError(
+        `Il quiz con id ${quizId} non è presente nel DB`,
+        StatusCodes.NOT_FOUND
+      )
+    );
   checkQuizExistAndCreator(quiz, user, next);
   checkQuestionNumber(quiz, questionNumber, next);
   const questionId = quiz.questions[questionNumber - 1];
@@ -108,4 +110,40 @@ exports.getQuestionFromQuiz = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getQuizStatus = catchAsync(async (req, res, next) => {});
+exports.getQuizStatus = catchAsync(async (req, res, next) => {
+  const { quizId } = req.params;
+  const { user } = res.locals;
+  const quiz = await Quiz.findById(quizId).populate("questions");
+  if (!quiz)
+    return next(
+      new AppError(
+        `Il quiz con id ${quizId} non è presente nel DB`,
+        StatusCodes.NOT_FOUND
+      )
+    );
+  checkQuizExistAndCreator(quiz, user, next);
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    quiz,
+  });
+});
+
+exports.getAllQuizzes = catchAsync(async (req, res, next) => {
+  const { user } = res.locals;
+  if (user.email === "guest@marina.difesa.it")
+    return next(
+      new AppError(
+        "Per vedere i risultati dei propri quiz occorre essere registrati"
+      ),
+      StatusCodes.FORBIDDEN
+    );
+  const quizzes = await Quiz.find({ creatorId: user.id });
+  if (!quizzes)
+    return next(
+      new AppError(`Non ci sono quiz creati dall'utente ${user.name}`)
+    );
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    quizzes,
+  });
+});

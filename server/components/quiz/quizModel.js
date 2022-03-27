@@ -46,6 +46,12 @@ quizSchema.methods = {
     await this.save();
     return this.score;
   },
+  resetQuiz: async function () {
+    this.answers = this.answers.fill("");
+    this.score = 0.0;
+    this.isSubmitted = false;
+    await this.save();
+  },
 };
 
 const quizModel = mongoose.model("Quiz", quizSchema);
