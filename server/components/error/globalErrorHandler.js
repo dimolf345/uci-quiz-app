@@ -3,13 +3,23 @@ const { StatusCodes } = require("http-status-codes");
 const AppError = require("./appError");
 require("dotenv").config();
 
+const sendErrorDev = (err, req, res) => {
+  console.log(err);
+  return res.status(err.statusCode).json({
+    status: err.status,
+    error: err,
+    message: err.message,
+    stack: err.stack,
+  });
+};
+
 const sendErrorProd = (err, req, res) => {
   //if err.isOperational, we have valid methods to handle the error, so we
   //send detailed information to the client
   if (err.isOperational) {
     return res.status(err.statusCode).json({
       status: err.status,
-      message: err,
+      message: err.message,
     });
   }
   //otherwise it's a non expected error, so we give only generic information
@@ -42,13 +52,16 @@ const handleValidationErrorDB = (err) => {
 
 const globalErrorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
-  err.message = err.message || "error";
+  err.status = err.status || "error";
+
   if (process.env.NODE_ENV === "development") {
     console.log(err);
+    return sendErrorDev(err, req, res);
   }
   //since we want to motify the err variable and it is NOT a good practice to modify directly
   //incoming variables, we create a copy of the err object
   let copyErr = { ...err };
+  copyErr.message = err.message;
   //custom error handlers
   if (copyErr.name === "CastError") copyErr = handleCastErrorDB(copyErr);
   if (copyErr.code === 11000) copyErr = handleDuplicateFieldDB(copyErr);

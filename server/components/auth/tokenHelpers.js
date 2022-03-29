@@ -19,11 +19,7 @@ exports.sendTokenAndUser = (response, user, token) => {
   response.status(StatusCodes.OK).json({
     status: "success",
     token,
-    user: {
-      username: user.name,
-      last_access: user.last_access,
-      role: user.role,
-    },
+    user,
   });
 };
 

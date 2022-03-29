@@ -6,11 +6,14 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import { useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useAtom } from "jotai";
 
+import { userAtom } from "../../atom";
 import styles from "./Siderbar.styles";
 import { selectRoutes } from "../../routes/routes";
 
 function Sidebar({ showSidebar }) {
+  const [user, setUser] = useAtom(userAtom);
   const menuItems = selectRoutes();
   const classes = styles();
   const navigate = useNavigate();

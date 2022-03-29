@@ -29,6 +29,7 @@ exports.signin = catchAsync(async (req, res, next) => {
     //if valideBeforeSave is not set to false model validation
     //will fail because of password missing
     await user.save({ validateBeforeSave: false });
+    user.hashed_password = undefined;
     setTokenCookie(res, token);
     sendTokenAndUser(res, user, token);
   } else {

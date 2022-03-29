@@ -10,6 +10,7 @@
     "allowImportExportEverywhere": true
   },
   "rules": {
+    "react/react-in-jsx-scope": "off",
     "prettier/prettier": "error",
     "spaced-comment": "off",
     "no-console": "warn",

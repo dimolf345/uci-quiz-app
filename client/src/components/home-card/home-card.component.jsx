@@ -4,23 +4,10 @@ import Typography from "@mui/material/Typography";
 
 import styles from "./home-card.styles";
 import HomeButtonGroup from "../home-button-group/home-button-group.component";
-
-const testRoutes = [
-  {
-    text: "Login",
-    path: "/login",
-  },
-  {
-    text: "Nuovo quiz",
-    path: "/quiz-settings",
-  },
-  {
-    text: "Registrati",
-    path: "/signup",
-  },
-];
+import { selectRoutes } from "../../routes/routes";
 
 function HomeCard() {
+  const testRoutes = selectRoutes();
   const classes = styles();
   return (
     <Box className={classes.homecard}>

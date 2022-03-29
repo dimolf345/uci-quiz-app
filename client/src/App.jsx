@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import Layout from "./layout/Layout.component";
 import appRoutes from "./routes/routes";
+import NotFound from "./pages/Notfound/notfound.component";
 
 const theme = createTheme();
 
@@ -24,6 +25,7 @@ function App() {
                 />
               );
             })}
+            <Route key="notfound" path="*" element={<NotFound />} />
           </Routes>
         </Layout>
       </Router>

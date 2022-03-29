@@ -4,7 +4,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 
 import HomeCard from "../../components/home-card/home-card.component";
-import styles from "./Home.styles";
+import styles from "./home.styles";
 
 function Home() {
   const theme = useTheme();
