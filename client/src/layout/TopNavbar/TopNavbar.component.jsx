@@ -8,11 +8,14 @@ import Typography from "@mui/material/Typography";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useAtom } from "jotai";
 
 import styles from "./TopNavbar.styles";
+import { userAtom } from "../../atom";
 
 function TopNavBar() {
   const fullText = useMediaQuery("(min-width:600px)");
+  const user = useAtom(userAtom)[0];
   const navigate = useNavigate();
   const classes = styles();
   return (
@@ -45,7 +48,8 @@ function TopNavBar() {
             color="inherit"
             onClick={() => navigate("/signin")}
           >
-            <AccountCircle />
+            {fullText && user.name && <Typography>{user.name}</Typography>}
+            <AccountCircle sx={{ ml: 1 }} />
           </IconButton>
         </Box>
       </Toolbar>

@@ -37,7 +37,7 @@ function filterByRole(role) {
 }
 
 //selectRoutes dynamically adapt the useful routes considering first if the user is logged or not, and then if there is come other filter
-export function selectRoutes(filter = [], role = "guest") {
+export function selectRoutes(role, filter = []) {
   const routesByRole = filterByRole(role);
   if (filter.length > 0) {
     return routesByRole.filter((route) => filter.includes(route.name));

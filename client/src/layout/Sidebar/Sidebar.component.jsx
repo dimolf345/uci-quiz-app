@@ -8,13 +8,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useAtom } from "jotai";
 
-import { userAtom } from "../../atom";
+import { userAtom, roleAtom } from "../../atom";
 import styles from "./Siderbar.styles";
 import { selectRoutes } from "../../routes/routes";
 
 function Sidebar({ showSidebar }) {
-  const [user, setUser] = useAtom(userAtom);
-  const menuItems = selectRoutes();
+  const role = useAtom(roleAtom)[0];
+  console.log(role);
+  const menuItems = selectRoutes(role);
   const classes = styles();
   const navigate = useNavigate();
   const location = useLocation();

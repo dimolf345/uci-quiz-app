@@ -1,14 +1,20 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { useAtom } from "jotai";
 
 import styles from "./home-card.styles";
 import HomeButtonGroup from "../home-button-group/home-button-group.component";
 import { selectRoutes } from "../../routes/routes";
+import { roleAtom } from "../../atom";
 
 function HomeCard() {
-  const testRoutes = selectRoutes();
   const classes = styles();
+  const role = useAtom(roleAtom)[0];
+  const routes =
+    role === "guest"
+      ? selectRoutes(role, ["login", "signup"])
+      : selectRoutes(role, ["home"]);
   return (
     <Box className={classes.homecard}>
       <Typography
@@ -23,7 +29,7 @@ function HomeCard() {
       <Typography variant="subtitle2" fontStyle="italic" align="center">
         Perchè l&apos;abilitazione alla guardia non te la regala nessuno.
       </Typography>
-      <HomeButtonGroup routes={testRoutes} />
+      <HomeButtonGroup routes={routes} />
     </Box>
   );
 }
