@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -6,7 +7,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
 function CustomTextField(props) {
-  const { type, value, handleChange, fieldName } = props;
+  const { type, value, handleChange, fieldName, ...otherProps } = props;
   const [showPassword, setShowPassword] = React.useState(false);
   const passwordOptions = ["password", "text"];
   const capitalizeFirstLetter = (field) => {
@@ -27,6 +28,7 @@ function CustomTextField(props) {
         fullWidth
         label={props.label ? props.label : name}
         value={value}
+        {...otherProps}
       />
       {type === "password" && (
         <FormGroup>

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -9,7 +9,7 @@ import { useAtom } from "jotai";
 
 import CustomTextField from "../../components/form/customTextField.component";
 import { fetchPOST } from "../../utils/fetchAPI/postAPI";
-import { userAtom, tokenAtom } from "../../atom";
+import { userAtom, tokenAtom, roleAtom } from "../../atom";
 
 const FIELDS = {
   email: "",
@@ -19,6 +19,7 @@ const FIELDS = {
 function Login() {
   const [user, setUser] = useAtom(userAtom);
   const [token, setToken] = useAtom(tokenAtom);
+  const role = useAtom(roleAtom)[0];
   const navigate = useNavigate();
   const [formFields, setFormField] = React.useState(FIELDS);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -26,6 +27,10 @@ function Login() {
   const resetFormFields = () => {
     setFormField(FIELDS);
   };
+
+  useEffect(() => {
+    if (role !== "guest") navigate("/");
+  }, [role]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,8 +45,6 @@ function Login() {
       const message = `Ti sei loggato come ${response.user.name}`;
       await setToken(response.token);
       await setUser(response.user);
-      console.log(user, token);
-      navigate("/");
     }
   };
 

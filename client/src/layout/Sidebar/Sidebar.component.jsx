@@ -14,7 +14,6 @@ import { selectRoutes } from "../../routes/routes";
 
 function Sidebar({ showSidebar }) {
   const role = useAtom(roleAtom)[0];
-  console.log(role);
   const menuItems = selectRoutes(role);
   const classes = styles();
   const navigate = useNavigate();

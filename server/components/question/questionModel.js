@@ -1,9 +1,12 @@
 const mongoose = require("mongoose");
+const User = require("../user/userModel");
+const shuffle = require("./questionUtils");
 
 const questionSchema = new mongoose.Schema(
   {
     creatorId: {
       type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
       required: [true, "E' necessario assegnare un id utente alla domanda"],
     },
     title: {
@@ -36,10 +39,10 @@ const questionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// questionSchema.virtual("answers").get(function () {
-//   const answers = shuffle([...this.wrongAnswers, this.correctAnswer]);
-//   return answers;
-// });
+questionSchema.virtual("answers").get(function () {
+  const answers = shuffle([...this.wrongAnswers, this.correctAnswer]);
+  return answers;
+});
 
 questionSchema.set("toJSON", { versionKey: false, virtuals: true });
 

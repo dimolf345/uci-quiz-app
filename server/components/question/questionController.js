@@ -56,7 +56,10 @@ exports.deleteQuestion = catchAsync(async (req, res, next) => {
 
 exports.getQuestion = catchAsync(async (req, res, next) => {
   const { questionId } = req.params;
-  const question = await Question.findById(questionId);
+  const question = await Question.findById(questionId).populate({
+    path: "creatorId",
+    select: "id name",
+  });
   if (!question) {
     return next(
       new AppError(

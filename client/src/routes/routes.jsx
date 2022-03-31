@@ -3,6 +3,8 @@ import React from "react";
 import Home from "../pages/Home/home.component";
 import Login from "../pages/Login/login.component";
 import SignUp from "../pages/SignUp/signup.component";
+import QuizSettings from "../pages/Quiz-Settings/quiz-settings.component";
+import CreateQuestion from "../pages/CreateQuestion/create-question.component";
 
 const ROUTES = [
   {
@@ -29,6 +31,22 @@ const ROUTES = [
     element: <SignUp />,
     icon: "",
     role: ["guest"],
+  },
+  {
+    name: "quiz-settings",
+    text: "Prova un quiz",
+    path: "/quiz-settings",
+    element: <QuizSettings />,
+    icon: "",
+    role: ["guest", "user", "admin"],
+  },
+  {
+    name: "add-question",
+    text: "Aggiungi domanda",
+    path: "/add-question",
+    element: <CreateQuestion />,
+    icon: "",
+    role: ["admin"],
   },
 ];
 
