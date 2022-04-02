@@ -13,6 +13,7 @@ exports.setTokenCookie = (response, token) => {
     cookieOptions.secure = true;
   }
   response.cookie("jwt", token, cookieOptions);
+  return response;
 };
 
 exports.sendTokenAndUser = (response, user, token) => {

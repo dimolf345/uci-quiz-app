@@ -8,6 +8,7 @@ function MainWrapper({ children, addPadLeft, sidebarWidth }) {
     display: "flex",
     flexDirection: "column",
     height: addPadLeft ? "100vh" : "calc(100vh - 56px)",
+    overflowY: "scroll",
   };
   const mainStyles = {
     flexGrow: 1,

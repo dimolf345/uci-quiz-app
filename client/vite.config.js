@@ -8,11 +8,23 @@ export default defineConfig(({ mode }) => {
     return {
       plugins: [react()],
       define: {
-        "process.env.BASE_URL": JSON.stringify("http://localhost:8000/api/v1"),
+        "process.env.API_URL": JSON.stringify("http://localhost:8000/api/v1"),
       },
+      base: "http://localhost:8000/",
       server: {
         cors: true,
       },
     };
   }
+  if (mode === "production")
+    return {
+      plugins: [react()],
+      define: {
+        "process.env.API_URL": JSON.stringify(
+          "https://uci-quiz-app.herokuapp.com/api/v1"
+        ),
+      },
+    };
 });
+
+//https://uci-quiz-app.herokuapp.com/api/v1

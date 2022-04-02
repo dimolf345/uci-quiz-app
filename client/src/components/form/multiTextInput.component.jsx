@@ -11,7 +11,8 @@ import Button from "@mui/material/Button";
 import CustomTextField from "./customTextField.component";
 
 function MultipleTextInput({ inputs, setInput, fieldName }) {
-  const [newAnswer, setNewAnswer] = React.useState("");
+  const [newAnswer, setNewAnswer] = useState("");
+  const [answerError, setAnswerError] = useState(false);
   return (
     <>
       <Typography fontWeight="bold" color="primary" align="center" id="test">
@@ -48,7 +49,9 @@ function MultipleTextInput({ inputs, setInput, fieldName }) {
       </ul>
       <CustomTextField
         type="text"
+        error={answerError}
         value={newAnswer}
+        helperText={answerError ? "Inserire testo non nullo" : ""}
         required={inputs.length === 0}
         handleChange={(e) => setNewAnswer(e.target.value)}
         fieldName="Nuova risposta errata"
@@ -56,10 +59,14 @@ function MultipleTextInput({ inputs, setInput, fieldName }) {
       <Container align="center">
         <Button
           onClick={() => {
+            if (newAnswer.trim() === "") {
+              setAnswerError(true);
+              return;
+            }
             setInput([...inputs, newAnswer]);
             setNewAnswer("");
           }}
-          variant="contained"
+          variant="outlined"
         >
           Aggiungi campo
         </Button>

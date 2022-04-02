@@ -28,9 +28,13 @@ app.use(helmet());
 app.use(express.json());
 app.use(mongoSanitize());
 app.use(xss());
-app.use(cors());
-
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 const CLIENT_URI = path.join(__dirname, "..", "..", "client", "dist");
 
