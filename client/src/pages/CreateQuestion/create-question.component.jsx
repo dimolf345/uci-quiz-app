@@ -8,6 +8,7 @@ import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Container from "@mui/material/Container";
+import Toolbar from "@mui/material/Toolbar";
 
 import CustomTextField from "../../components/form/customTextField.component";
 import MultiTextInput from "../../components/form/multiTextInput.component";
@@ -125,6 +126,7 @@ function CreateQuestion() {
           </LoadingButton>
         </Container>
       </form>
+      <Toolbar />
     </Box>
   );
 }
