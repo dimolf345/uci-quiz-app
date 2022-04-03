@@ -43,6 +43,7 @@ function CreateQuestion() {
 
   const resetFormFields = () => {
     setFormField(FIELDS);
+    setWrongAnswers([]);
   };
 
   const handleSubmit = async (e) => {
