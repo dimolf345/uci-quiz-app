@@ -74,7 +74,6 @@ function Signup() {
         <CustomTextField
           handleChange={handleChange("name")}
           fieldName="Nome e Cognome"
-          type="text"
           value={formFields.name}
         />
         {/* Email */}

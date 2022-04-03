@@ -6,11 +6,10 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
 import { useNavigate } from "react-router";
 import { useAtom } from "jotai";
-import axios from "axios";
 
 import CustomTextField from "../../components/form/customTextField.component";
 import { fetchPOST } from "../../utils/fetchAPI/postAPI";
-import { userAtom, tokenAtom, roleAtom } from "../../atom";
+import { userAtom, roleAtom } from "../../atom";
 
 const FIELDS = {
   email: "",
@@ -19,7 +18,6 @@ const FIELDS = {
 
 function Login() {
   const [user, setUser] = useAtom(userAtom);
-  const [token, setToken] = useAtom(tokenAtom);
   const role = useAtom(roleAtom)[0];
   const navigate = useNavigate();
   const [formFields, setFormField] = React.useState(FIELDS);
@@ -44,8 +42,8 @@ function Login() {
       setIsLoading(false);
       // eslint-disable-next-line no-alert
       const message = `Ti sei loggato come ${response.user.name}`;
-      await setToken(response.token);
       await setUser(response.user);
+      alert(message);
     }
   };
 

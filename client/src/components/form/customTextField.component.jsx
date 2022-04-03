@@ -5,9 +5,10 @@ import TextField from "@mui/material/TextField";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import PropTypes from "prop-types";
 
 function CustomTextField(props) {
-  const { type, value, handleChange, fieldName, ...otherProps } = props;
+  const { type, value, handleChange, fieldName, label, ...otherProps } = props;
   const [showPassword, setShowPassword] = React.useState(false);
   const passwordOptions = ["password", "text"];
   const capitalizeFirstLetter = (field) => {
@@ -15,7 +16,7 @@ function CustomTextField(props) {
     return char0 + field.substr(1);
   };
   const name = capitalizeFirstLetter(fieldName);
-  let dynamicType =
+  const dynamicType =
     type !== "password" ? type : passwordOptions[Number(showPassword)];
 
   return (
@@ -26,7 +27,7 @@ function CustomTextField(props) {
         required
         variant="outlined"
         fullWidth
-        label={props.label ? props.label : name}
+        label={name || label}
         value={value}
         {...otherProps}
       />
@@ -42,5 +43,18 @@ function CustomTextField(props) {
     </Box>
   );
 }
+
+CustomTextField.defaultProps = {
+  type: "text",
+  label: "Campo di testo",
+};
+
+CustomTextField.propTypes = {
+  type: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  label: PropTypes.string,
+  fieldName: PropTypes.string.isRequired,
+};
 
 export default CustomTextField;

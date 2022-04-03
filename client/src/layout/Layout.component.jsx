@@ -1,7 +1,7 @@
 import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+import PropTypes from "prop-types";
 import TopNavBar from "./TopNavbar/TopNavbar.component";
 import Sidebar from "./Sidebar/Sidebar.component";
 import MainWrapper from "./MainWrapper/MainWrapper.component";
@@ -27,5 +27,12 @@ function Layout({ children }) {
     </>
   );
 }
+
+Layout.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
 
 export default Layout;

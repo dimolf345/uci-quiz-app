@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line prefer-destructuring
 const API_URL = process.env.API_URL;
 
@@ -19,5 +20,3 @@ export async function fetchPOST(endpoint, body) {
     console.log(error);
   }
 }
-
-export async function fetchGET() {}

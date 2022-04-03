@@ -8,7 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useAtom } from "jotai";
 
-import { userAtom, roleAtom } from "../../atom";
+import { roleAtom } from "../../atom";
 import styles from "./Siderbar.styles";
 import { selectRoutes } from "../../routes/routes";
 
@@ -28,7 +28,9 @@ function Sidebar({ showSidebar }) {
       anchor="left"
       variant="permanent"
     >
+      {/* Toolbar element is used to crete the margin below the topNavigation toolbar */}
       <Toolbar />
+      {/* Dynamic link list based on role */}
       <List>
         {menuItems.map((item) => (
           <ListItemButton

@@ -9,8 +9,12 @@
     "sourceType": "module",
     "allowImportExportEverywhere": true
   },
+  "env": {
+    "browser": true
+  },
   "rules": {
     "react/react-in-jsx-scope": "off",
+    "import/no-cycle": "off",
     "prettier/prettier": "error",
     "spaced-comment": "off",
     "no-console": "warn",

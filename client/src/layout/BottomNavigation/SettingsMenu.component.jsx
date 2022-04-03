@@ -17,7 +17,7 @@ const options = [
   },
 ];
 
-const OptionsMenu = () => {
+function OptionsMenu() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -62,6 +62,6 @@ const OptionsMenu = () => {
       </Menu>
     </>
   );
-};
+}
 
 export default OptionsMenu;

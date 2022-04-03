@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import { useAtom } from "jotai";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -58,6 +57,7 @@ function CreateQuestion() {
     if (response) {
       setIsLoading(false);
       // eslint-disable-next-line no-alert
+      // eslint-disable-next-line no-undef
       alert(response.status);
     }
   };
@@ -92,7 +92,11 @@ function CreateQuestion() {
           value={formFields.correctAnswer}
         />
         {/* Wrong Answers */}
-        <MultiTextInput inputs={wrongAnswers} setInput={setWrongAnswers} />
+        <MultiTextInput
+          inputs={wrongAnswers}
+          setInput={setWrongAnswers}
+          fieldName="Riposta errata"
+        />
         {/* Category */}
         <TextField
           sx={{ my: 2 }}
@@ -103,9 +107,9 @@ function CreateQuestion() {
           id="cateogry"
           fullWidth
         >
-          {CATEGORIES.map((category) => (
-            <MenuItem key={category} value={category}>
-              {`Categoria ${category.toUpperCase()}`}
+          {CATEGORIES.map((categoryItem) => (
+            <MenuItem key={categoryItem} value={categoryItem}>
+              {`Categoria ${categoryItem.toUpperCase()}`}
             </MenuItem>
           ))}
         </TextField>

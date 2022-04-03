@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import PropTypes from "prop-types";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -13,6 +13,10 @@ import CustomTextField from "./customTextField.component";
 function MultipleTextInput({ inputs, setInput, fieldName }) {
   const [newAnswer, setNewAnswer] = useState("");
   const [answerError, setAnswerError] = useState(false);
+
+  const handleClick = (delIndex) => {
+    setInput(inputs.filter((el, index) => index !== delIndex));
+  };
   return (
     <>
       <Typography fontWeight="bold" color="primary" align="center" id="test">
@@ -20,9 +24,9 @@ function MultipleTextInput({ inputs, setInput, fieldName }) {
       </Typography>
       <ul aria-describedby="test" style={{ padding: 0 }}>
         {inputs.map((input, index) => (
-          <li key={index} style={{ display: "flex", marginBottom: "1rem" }}>
+          <li key={input} style={{ display: "flex", marginBottom: "1rem" }}>
             <OutlinedInput
-              label={`Risposta errata ${index + 1}`}
+              label={`${fieldName} ${index + 1}`}
               disabled
               value={input}
               type="text"
@@ -32,9 +36,7 @@ function MultipleTextInput({ inputs, setInput, fieldName }) {
                 <InputAdornment position="end">
                   <IconButton
                     onClick={() => {
-                      inputs.length === 1
-                        ? setInput([])
-                        : setInput(inputs.slice(index, 1));
+                      handleClick(index);
                     }}
                     color="error"
                     size="large"
@@ -75,5 +77,15 @@ function MultipleTextInput({ inputs, setInput, fieldName }) {
     </>
   );
 }
+
+MultipleTextInput.defaultProps = {
+  fielName: "Nuovo campo di testo",
+};
+
+MultipleTextInput.propTypes = {
+  inputs: PropTypes.array.isRequired,
+  setInput: PropTypes.func.isRequired,
+  fieldName: PropTypes.string,
+};
 
 export default MultipleTextInput;
