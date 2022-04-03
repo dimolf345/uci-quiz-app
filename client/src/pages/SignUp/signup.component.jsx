@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React from "react";
+import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -9,6 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 import CustomTextField from "../../components/form/customTextField.component";
 import { fetchPOST } from "../../utils/fetchAPI/postAPI";
+import FormDialog from "../../components/form/formDialog.component";
 
 const SHIPS = [
   "bergamini",
@@ -29,9 +30,11 @@ const FIELDS = {
 };
 
 function Signup() {
-  const [formFields, setFormField] = React.useState(FIELDS);
-  const [myShip, setMyShip] = React.useState(SHIPS[6]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [formFields, setFormField] = useState(FIELDS);
+  const [myShip, setMyShip] = useState(SHIPS[6]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [adminPassword, setAdminPassword] = useState("");
+  console.log(adminPassword);
 
   const resetFormFields = () => {
     setFormField(FIELDS);
@@ -44,7 +47,7 @@ function Signup() {
     const response = await fetchPOST("/users", {
       ...formFields,
       ship: myShip,
-      role: "user",
+      adminPassword,
     });
     if (response) {
       setIsLoading(false);
@@ -114,6 +117,10 @@ function Signup() {
             </MenuItem>
           ))}
         </TextField>
+        <FormDialog
+          fieldValue={adminPassword}
+          setFieldValue={setAdminPassword}
+        />
         <LoadingButton
           loading={isLoading}
           loadingIndicator="Attendi..."

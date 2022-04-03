@@ -79,11 +79,11 @@ function MultipleTextInput({ inputs, setInput, fieldName }) {
 }
 
 MultipleTextInput.defaultProps = {
-  fielName: "Nuovo campo di testo",
+  fieldName: "Nuovo campo di testo",
 };
 
 MultipleTextInput.propTypes = {
-  inputs: PropTypes.array.isRequired,
+  inputs: PropTypes.arrayOf(PropTypes.string).isRequired,
   setInput: PropTypes.func.isRequired,
   fieldName: PropTypes.string,
 };
