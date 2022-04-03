@@ -14,7 +14,7 @@ function HomeCard() {
   const routes =
     role === "guest"
       ? selectRoutes(role, ["login", "signup"])
-      : selectRoutes(role, ["home"]);
+      : selectRoutes(role, ["quiz-settings", "add-question"]);
   return (
     <Box className={classes.homecard}>
       <Typography

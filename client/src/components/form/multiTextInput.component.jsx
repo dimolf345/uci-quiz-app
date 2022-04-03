@@ -65,10 +65,11 @@ function MultipleTextInput({ inputs, setInput, fieldName }) {
             }
             setInput([...inputs, newAnswer]);
             setNewAnswer("");
+            setAnswerError(false);
           }}
           variant="outlined"
         >
-          Aggiungi campo
+          Aggiungi risposta errata
         </Button>
       </Container>
     </>

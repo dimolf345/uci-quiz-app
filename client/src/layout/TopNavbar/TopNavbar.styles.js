@@ -14,6 +14,10 @@ const styles = makeStyles((theme) => {
       flexGrow: 1,
       flexWrap: "nowrap",
     },
+    userIcon: {
+      position: "absolute",
+      right: 24,
+    },
   };
 });
 

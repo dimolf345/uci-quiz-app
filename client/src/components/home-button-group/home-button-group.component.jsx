@@ -16,7 +16,6 @@ function HomeButtonGroup({ routes }) {
         <Button
           component="a"
           key={route.text}
-          className={classes.button}
           variant="contained"
           onClick={() => navigate(route.path)}
         >
