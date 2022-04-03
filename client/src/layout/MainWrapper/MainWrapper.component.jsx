@@ -18,7 +18,6 @@ function MainWrapper({ children, addPadLeft, sidebarWidth }) {
     <div style={wrapperStyle}>
       <Toolbar />
       <main style={mainStyles}>{children}</main>
-      <Toolbar />
     </div>
   );
 }
