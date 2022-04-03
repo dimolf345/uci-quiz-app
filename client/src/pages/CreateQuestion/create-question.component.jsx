@@ -88,6 +88,7 @@ function CreateQuestion() {
           handleChange={handleChange("correctAnswer")}
           fieldName="Risposta corretta"
           type="text"
+          autoComplete="off"
           value={formFields.correctAnswer}
         />
         {/* Wrong Answers */}
