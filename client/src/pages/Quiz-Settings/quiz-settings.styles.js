@@ -4,12 +4,13 @@ const styles = makeStyles(() => ({
   centered: {
     minHeight: "100%",
     width: "100%",
-    padding: "2rem",
     marginTop: -2,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    paddingTop: "2rem",
     alignItems: "center",
+    padding: "2rem",
   },
   form: {
     width: "100%",

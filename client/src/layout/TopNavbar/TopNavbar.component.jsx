@@ -39,7 +39,7 @@ function TopNavBar() {
         <Typography className={classes.heading} variant="h5" component="h2">
           {fullText && <span>Nave Martinengo - </span>}F 596
         </Typography>
-        <Box sx={{ flexGrow: 0 }}>
+        <Box className={fullText ? classes.userIcon : ""}>
           <IconButton
             size="large"
             aria-label="dropdown-control"

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import { useAtom } from "jotai";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -72,7 +71,7 @@ function CreateQuestion() {
       >
         Compila la domanda
       </Typography>
-      <form onSubmit={handleSubmit} style={{ padding: "2rem", width: "100%" }}>
+      <form onSubmit={handleSubmit} className={classes.form}>
         {/* Question Title */}
         <CustomTextField
           handleChange={handleChange("title")}
@@ -101,9 +100,9 @@ function CreateQuestion() {
           id="cateogry"
           fullWidth
         >
-          {CATEGORIES.map((category) => (
-            <MenuItem key={category} value={category}>
-              {`Categoria ${category.toUpperCase()}`}
+          {CATEGORIES.map((categoryOption) => (
+            <MenuItem key={categoryOption} value={categoryOption}>
+              {`Categoria ${categoryOption.toUpperCase()}`}
             </MenuItem>
           ))}
         </TextField>

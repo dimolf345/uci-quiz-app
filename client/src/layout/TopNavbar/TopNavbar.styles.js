@@ -1,20 +1,23 @@
 import { makeStyles } from "@mui/styles";
 
-const styles = makeStyles((theme) => {
-  return {
-    menuIcon: {
-      display: {
-        xs: "none",
-        md: "flex",
-      },
-      flexGrow: 0,
+const styles = makeStyles(() => ({
+  menuIcon: {
+    display: {
+      xs: "none",
+      md: "flex",
     },
-    heading: {
-      textAlign: "center",
-      flexGrow: 1,
-      flexWrap: "nowrap",
-    },
-  };
-});
+    flexGrow: 0,
+  },
+  heading: {
+    textAlign: "center",
+    flexGrow: 1,
+    flexWrap: "nowrap",
+  },
+  userIcon: {
+    position: "absolute",
+    right: 24,
+    flexGrow: 0,
+  },
+}));
 
 export default styles;
