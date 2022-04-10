@@ -16,6 +16,7 @@ const styles = makeStyles(() => ({
   userIcon: {
     position: "absolute",
     right: 24,
+    flexGrow: 0,
   },
 }));
 

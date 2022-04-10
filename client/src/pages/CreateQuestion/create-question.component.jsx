@@ -74,7 +74,7 @@ function CreateQuestion() {
       >
         Compila la domanda
       </Typography>
-      <form onSubmit={handleSubmit} style={{ padding: "2rem", width: "100%" }}>
+      <form onSubmit={handleSubmit} className={classes.form}>
         {/* Question Title */}
         <CustomTextField
           handleChange={handleChange("title")}
@@ -108,9 +108,9 @@ function CreateQuestion() {
           id="cateogry"
           fullWidth
         >
-          {CATEGORIES.map((categoryItem) => (
-            <MenuItem key={categoryItem} value={categoryItem}>
-              {`Categoria ${categoryItem.toUpperCase()}`}
+          {CATEGORIES.map((categoryOption) => (
+            <MenuItem key={categoryOption} value={categoryOption}>
+              {`Categoria ${categoryOption.toUpperCase()}`}
             </MenuItem>
           ))}
         </TextField>
