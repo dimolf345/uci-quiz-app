@@ -1,0 +1,45 @@
+{
+  "name": "uci-quiz-app",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "npm run dev --prefix client",
+    "server": "cd server && NODE_ENV=development nodemon server.js",
+    "server:local": "cd server && NODE_ENV=development nodemon server.js --local",
+    "start": "npm run client & npm run server",
+    "start:local": "npm run client & npm run server:local",
+    "build": "npm run build --prefix client && cd server && NODE_ENV=production node server.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+  },
+  "repository": "git@github.com:dimolf345/uci-quiz-app.git",
+  "author": "dimolf345 <dimolfetta.ta@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-mongo-sanitize": "^2.2.0",
+    "helmet": "^5.0.2",
+    "http-status-codes": "^2.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.2.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.3",
+    "prettier": "^2.5.1"
+  }
+}

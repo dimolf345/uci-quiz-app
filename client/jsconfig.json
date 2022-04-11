@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@routes/*": ["./src/routes/*"]
+    }
+  }
+}
