@@ -94,7 +94,7 @@ exports.getQuestionFromQuiz = catchAsync(async (req, res, next) => {
     );
   checkQuizExistAndCreator(quiz, user, next);
   checkQuestionNumber(quiz, questionNumber, next);
-  const questionId = quiz.questions[questionNumber - 1];
+  const questionId = quiz.questions[questionNumber];
   const question = await Question.findById(questionId);
   if (!question)
     return next(
