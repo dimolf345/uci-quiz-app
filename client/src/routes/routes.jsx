@@ -5,6 +5,7 @@ import Login from "../pages/Login/login.component";
 import SignUp from "../pages/SignUp/signup.component";
 import QuizSettings from "../pages/Quiz-Settings/quiz-settings.component";
 import CreateQuestion from "../pages/CreateQuestion/create-question.component";
+import QuestionPage from "../pages/QuestionPage/question-page.component";
 
 const ROUTES = [
   {
@@ -47,6 +48,14 @@ const ROUTES = [
     element: <CreateQuestion />,
     icon: "",
     role: ["admin"],
+  },
+  {
+    name: "quiz-question",
+    text: "Carica una domanda",
+    path: "/quizzes/:quizId",
+    element: <QuestionPage />,
+    icon: "",
+    role: ["user", "admin"],
   },
 ];
 

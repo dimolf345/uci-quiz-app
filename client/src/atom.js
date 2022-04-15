@@ -10,4 +10,6 @@ export const roleAtom = atom((get) =>
   get(userAtom).role ? get(userAtom).role : "guest"
 );
 
+export const questionsAtom = atom(0);
+
 export const quizAtom = atom("");
